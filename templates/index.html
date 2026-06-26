@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Schedule System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --sidebar-width: 280px;
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --success-color: #27ae60;
+            --danger-color: #e74c3c;
+            --warning-color: #f39c12;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f6fa;
+            overflow-x: hidden;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: var(--sidebar-width);
+            background: linear-gradient(180deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 20px 0;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+            overflow-y: auto;
+        }
+
+        .sidebar-brand {
+            padding: 20px 25px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 20px;
+        }
+
+        .sidebar-brand h3 {
+            margin: 0;
+            font-weight: 600;
+            font-size: 1.5rem;
+        }
+
+        .sidebar-brand small {
+            display: block;
+            font-size: 0.8rem;
+            opacity: 0.7;
+            margin-top: 5px;
+        }
+
+        .sidebar-section {
+            padding: 10px 0;
+        }
+
+        .sidebar-section-title {
+            padding: 10px 25px;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.5;
+            font-weight: 600;
+        }
+
+        .nav-item {
+            padding: 10px 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .nav-item:hover {
+            background: rgba(255,255,255,0.1);
+            border-left-color: var(--secondary-color);
+        }
+
+        .nav-item.active {
+            background: rgba(255,255,255,0.15);
+            border-left-color: var(--secondary-color);
+        }
+
+        .nav-item i {
+            font-size: 1.2rem;
+            width: 24px;
+        }
+
+        .nav-item .badge {
+            margin-left: auto;
+            background: var(--secondary-color);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: var(--sidebar-width);
+            padding: 30px;
+            min-height: 100vh;
+            transition: all 0.3s ease;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: white;
+            padding: 20px 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .page-header h4 {
+            margin: 0;
+            color: var(--primary-color);
+        }
+
+        .page-header .company-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .company-badge {
+            background: var(--secondary-color);
+            color: white;
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        /* Cards */
+        .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+        }
+
+        .card-header {
+            background: white;
+            border-bottom: 1px solid #eee;
+            padding: 15px 20px;
+            font-weight: 600;
+            border-radius: 10px 10px 0 0;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        /* Table Styles */
+        .table-container {
+            overflow-x: auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            padding: 20px;
+        }
+
+        .table {
+            margin-bottom: 0;
+        }
+
+        .table th {
+            background: #f8f9fa;
+            border-bottom: 2px solid #dee2e6;
+            font-weight: 600;
+            color: var(--primary-color);
+            white-space: nowrap;
+        }
+
+        .table td {
+            vertical-align: middle;
+        }
+
+        .badge-status {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+        }
+
+        .badge-paid { background: #d4edda; color: #155724; }
+        .badge-pending { background: #fff3cd; color: #856404; }
+        .badge-overdue { background: #f8d7da; color: #721c24; }
+
+        /* Modal Styles */
+        .modal-content {
+            border-radius: 10px;
+        }
+
+        .modal-header {
+            background: var(--primary-color);
+            color: white;
+            border-radius: 10px 10px 0 0;
+        }
+
+        .modal-header .btn-close {
+            filter: brightness(0) invert(1);
+        }
+
+        /* Action Buttons */
+        .btn-action {
+            padding: 4px 8px;
+            margin: 0 2px;
+            font-size: 0.8rem;
+        }
+
+        .btn-edit { color: var(--secondary-color); }
+        .btn-delete { color: var(--danger-color); }
+        .btn-view { color: var(--success-color); }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.active {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 15px;
+            }
+
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+        }
+
+        /* Utility Classes */
+        .fade-in {
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255,255,255,0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .loading-overlay.active {
+            display: flex;
+        }
+
+        .spinner-border {
+            width: 3rem;
+            height: 3rem;
+        }
+
+        .company-switch-btn {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .company-switch-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .nav-sub-item {
+            padding-left: 45px;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-brand">
+            <h3><i class="bi bi-calendar-check"></i> Payment Scheduler</h3>
+            <small>v1.0.0</small>
+        </div>
+
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">Data Entry</div>
+            <div class="nav-item active" data-page="suppliers">
+                <i class="bi bi-people"></i>
+                <span>Suppliers</span>
+            </div>
+            <div class="nav-item" data-page="customers">
+                <i class="bi bi-person"></i>
+                <span>Customers</span>
+            </div>
+            <div class="nav-item" data-page="supplier-payments">
+                <i class="bi bi-arrow-up-circle"></i>
+                <span>Supplier Payments</span>
+            </div>
+            <div class="nav-item" data-page="customer-payments">
+                <i class="bi bi-arrow-down-circle"></i>
+                <span>Customer Payments</span>
+            </div>
+        </div>
+
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">Reports</div>
+            <div class="nav-item" data-page="liquidity">
+                <i class="bi bi-graph-up-arrow"></i>
+                <span>Monthly Liquidity</span>
+            </div>
+        </div>
+
+        <div class="sidebar-section mt-auto">
+            <div class="sidebar-section-title">System</div>
+            <div class="nav-item company-switch-btn" data-page="switch-company">
+                <i class="bi bi-arrow-left-right"></i>
+                <span>Switch Company</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h4 id="pageTitle"><i class="bi bi-people"></i> Suppliers</h4>
+            <div class="company-info">
+                <span class="company-badge" id="companyBadge">Company A (GHS)</span>
+                <button class="btn btn-primary btn-sm" id="addButton">
+                    <i class="bi bi-plus-circle"></i> Add New
+                </button>
+                <div class="btn-group">
+                    <button class="btn btn-outline-success btn-sm" id="importBtn">
+                        <i class="bi bi-upload"></i> Import
+                    </button>
+                    <button class="btn btn-outline-primary btn-sm" id="exportBtn">
+                        <i class="bi bi-download"></i> Export
+                    </button>
+                    <button class="btn btn-outline-info btn-sm" id="templateBtn">
+                        <i class="bi bi-file-earmark-excel"></i> Template
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content Area -->
+        <div id="contentArea">
+            <!-- Dynamic content will be loaded here -->
+        </div>
+    </div>
+
+    <!-- Add/Edit Modal -->
+    <div class="modal fade" id="itemModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitle">Add New</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" id="modalBody">
+                    <!-- Dynamic form will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Company Switch Modal -->
+    <div class="modal fade" id="companyModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Switch Company</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" id="companyModalBody">
+                    <!-- Company switch content -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden file input -->
+    <input type="file" id="fileInput" style="display:none" accept=".xlsx,.xls">
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Main Application
+        class PaymentSystem {
+            constructor() {
+                this.currentPage = 'suppliers';
+                this.currentCompany = null;
+                this.modalInstance = new bootstrap.Modal(document.getElementById('itemModal'));
+                this.companyModalInstance = new bootstrap.Modal(document.getElementById('companyModal'));
+                this.init();
+            }
+
+            init() {
+                this.loadCompanyInfo();
+                this.setupEventListeners();
+                this.loadPage('suppliers');
+            }
+
+            setupEventListeners() {
+                // Navigation
+                document.querySelectorAll('.nav-item[data-page]').forEach(item => {
+                    item.addEventListener('click', (e) => {
+                        const page = item.dataset.page;
+                        if (page === 'switch-company') {
+                            this.showCompanySwitch();
+                            return;
+                        }
+                        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+                        item.classList.add('active');
+                        this.loadPage(page);
+                    });
+                });
+
+                // Add button
+                document.getElementById('addButton').addEventListener('click', () => {
+                    this.showAddForm();
+                });
+
+                // Import
+                document.getElementById('importBtn').addEventListener('click', () => {
+                    document.getElementById('fileInput').click();
+                });
+
+                document.getElementById('fileInput').addEventListener('change', (e) => {
+                    if (e.target.files.length > 0) {
+                        this.importData(e.target.files[0]);
+                    }
+                });
+
+                // Export
+                document.getElementById('exportBtn').addEventListener('click', () => {
+                    this.exportData();
+                });
+
+                // Template
+                document.getElementById('templateBtn').addEventListener('click', () => {
+                    this.downloadTemplate();
+                });
+            }
+
+            loadCompanyInfo() {
+                $.ajax({
+                    url: '/api/active-company',
+                    method: 'GET',
+                    success: (data) => {
+                        this.currentCompany = data;
+                        document.getElementById('companyBadge').textContent =
+                            `${data.name} (${data.currency})`;
+                    }
+                });
+            }
+
+            loadPage(page) {
+                this.currentPage = page;
+                const titles = {
+                    'suppliers': 'Suppliers',
+                    'customers': 'Customers',
+                    'supplier-payments': 'Supplier Payments',
+                    'customer-payments': 'Customer Payments',
+                    'liquidity': 'Monthly Liquidity Report'
+                };
+                document.getElementById('pageTitle').innerHTML =
+                    `<i class="bi ${this.getPageIcon(page)}"></i> ${titles[page] || page}`;
+
+                // Update button visibility
+                const addBtn = document.getElementById('addButton');
+                if (page === 'liquidity') {
+                    addBtn.style.display = 'none';
+                    document.querySelector('.btn-group').style.display = 'none';
+                } else {
+                    addBtn.style.display = 'inline-block';
+                    document.querySelector('.btn-group').style.display = 'inline-flex';
+                }
+
+                this.fetchPageData(page);
+            }
+
+            getPageIcon(page) {
+                const icons = {
+                    'suppliers': 'bi-people',
+                    'customers': 'bi-person',
+                    'supplier-payments': 'bi-arrow-up-circle',
+                    'customer-payments': 'bi-arrow-down-circle',
+                    'liquidity': 'bi-graph-up-arrow'
+                };
+                return icons[page] || 'bi-table';
+            }
+
+            fetchPageData(page) {
+                const loading = document.getElementById('loadingOverlay');
+                loading.classList.add('active');
+
+                let url = `/api/${page}`;
+                if (page === 'liquidity') {
+                    url = '/api/reports/liquidity';
+                }
+
+                $.ajax({
+                    url: url,
+                    method: 'GET',
+                    success: (data) => {
+                        loading.classList.remove('active');
+                        if (page === 'liquidity') {
+                            this.renderLiquidityReport(data);
+                        } else {
+                            this.renderTable(page, data);
+                        }
+                    },
+                    error: (err) => {
+                        loading.classList.remove('active');
+                        this.showError('Failed to load data');
+                    }
+                });
+            }
+
+            renderTable(page, data) {
+                const container = document.getElementById('contentArea');
+                let html = '<div class="table-container fade-in"><table class="table table-hover"><thead><tr>';
+
+                const columns = this.getTableColumns(page);
+                columns.forEach(col => {
+                    html += `<th>${col.label}</th>`;
+                });
+                html += '<th>Actions</th></tr></thead><tbody>';
+
+                if (data.length === 0) {
+                    html += `<tr><td colspan="${columns.length + 1}" class="text-center">No records found</td></tr>`;
+                } else {
+                    data.forEach(item => {
+                        html += '<tr>';
+                        columns.forEach(col => {
+                            let value = item[col.key] || '';
+                            if (col.key === 'status') {
+                                value = this.getStatusBadge(value);
+                            }
+                            if (col.key === 'amount') {
+                                value = this.formatCurrency(value);
+                            }
+                            html += `<td>${value}</td>`;
+                        });
+                        html += `<td>
+                            <button class="btn btn-sm btn-action btn-edit" onclick="app.editItem('${page}', ${item.id})">
+                                <i class="bi bi-pencil"></i>
+                            </button>
+                            <button class="btn btn-sm btn-action btn-delete" onclick="app.deleteItem('${page}', ${item.id})">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </td>`;
+                        html += '</tr>';
+                    });
+                }
+
+                html += '</tbody></table></div>';
+                container.innerHTML = html;
+            }
+
+            getTableColumns(page) {
+                const columns = {
+                    'suppliers': [
+                        { key: 'name', label: 'Name' },
+                        { key: 'address', label: 'Address' },
+                        { key: 'telephone', label: 'Telephone' },
+                        { key: 'bank_name', label: 'Bank' },
+                        { key: 'account_number', label: 'Account No' }
+                    ],
+                    'customers': [
+                        { key: 'name', label: 'Name' },
+                        { key: 'address', label: 'Address' },
+                        { key: 'telephone', label: 'Telephone' }
+                    ],
+                    'supplier-payments': [
+                        { key: 'supplier_name', label: 'Supplier' },
+                        { key: 'payment_description', label: 'Description' },
+                        { key: 'invoice_ref', label: 'Invoice Ref' },
+                        { key: 'amount', label: 'Amount' },
+                        { key: 'type', label: 'Type' },
+                        { key: 'due_date', label: 'Due Date' },
+                        { key: 'status', label: 'Status' }
+                    ],
+                    'customer-payments': [
+                        { key: 'customer_name', label: 'Customer' },
+                        { key: 'service_description', label: 'Service' },
+                        { key: 'invoice_ref', label: 'Invoice Ref' },
+                        { key: 'amount', label: 'Amount' },
+                        { key: 'type', label: 'Type' },
+                        { key: 'due_date', label: 'Due Date' },
+                        { key: 'status', label: 'Status' }
+                    ]
+                };
+                return columns[page] || [];
+            }
+
+            getStatusBadge(status) {
+                const classes = {
+                    'Paid': 'badge-paid',
+                    'Pending': 'badge-pending',
+                    'Overdue': 'badge-overdue'
+                };
+                return `<span class="badge-status ${classes[status] || 'badge-pending'}">${status || 'Pending'}</span>`;
+            }
+
+            formatCurrency(amount) {
+                if (!amount) return '0.00';
+                return `${this.currentCompany?.currency || 'GHS'} ${parseFloat(amount).toFixed(2)}`;
+            }
+
+            showAddForm() {
+                const page = this.currentPage;
+                const title = document.getElementById('modalTitle');
+                const body = document.getElementById('modalBody');
+
+                if (page === 'liquidity') return;
+
+                title.textContent = `Add New ${this.getPageTitle(page)}`;
+                body.innerHTML = this.getFormHTML(page);
+                this.modalInstance.show();
+
+                // Populate dropdowns if needed
+                if (page === 'supplier-payments' || page === 'customer-payments') {
+                    this.populateEntityDropdown(page);
+                }
+            }
+
+            getPageTitle(page) {
+                const titles = {
+                    'suppliers': 'Supplier',
+                    'customers': 'Customer',
+                    'supplier-payments': 'Supplier Payment',
+                    'customer-payments': 'Customer Payment'
+                };
+                return titles[page] || page;
+            }
+
+            getFormHTML(page) {
+                if (page === 'suppliers') {
+                    return `
+                        <form id="entityForm">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Name *</label>
+                                        <input type="text" class="form-control" name="name" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Telephone</label>
+                                        <input type="text" class="form-control" name="telephone">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Address</label>
+                                <textarea class="form-control" name="address" rows="2"></textarea>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Bank Name</label>
+                                        <input type="text" class="form-control" name="bank_name">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Account Number</label>
+                                        <input type="text" class="form-control" name="account_number">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Account Name</label>
+                                        <input type="text" class="form-control" name="account_name">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">SWIFT Code</label>
+                                        <input type="text" class="form-control" name="swift_code">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Bank Address</label>
+                                <textarea class="form-control" name="bank_address" rows="2"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </form>
+                    `;
+                }
+
+                if (page === 'customers') {
+                    return `
+                        <form id="entityForm">
+                            <div class="mb-3">
+                                <label class="form-label">Name *</label>
+                                <input type="text" class="form-control" name="name" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Address</label>
+                                <textarea class="form-control" name="address" rows="2"></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Telephone</label>
+                                <input type="text" class="form-control" name="telephone">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </form>
+                    `;
+                }
+
+                if (page === 'supplier-payments' || page === 'customer-payments') {
+                    const isSupplier = page === 'supplier-payments';
+                    const entityType = isSupplier ? 'supplier' : 'customer';
+                    const entityLabel = isSupplier ? 'Supplier' : 'Customer';
+                    const descLabel = isSupplier ? 'Payment Description' : 'Service Description';
+                    const descName = isSupplier ? 'payment_description' : 'service_description';
+
+                    return `
+                        <form id="entityForm">
+                            <div class="mb-3">
+                                <label class="form-label">${entityLabel} *</label>
+                                <select class="form-select" name="${entityType}_id" required>
+                                    <option value="">Select ${entityLabel}</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">${descLabel}</label>
+                                <input type="text" class="form-control" name="${descName}">
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Invoice Ref</label>
+                                        <input type="text" class="form-control" name="invoice_ref">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Amount *</label>
+                                        <input type="number" step="0.01" class="form-control" name="amount" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Type</label>
+                                        <select class="form-select" name="type">
+                                            <option value="Cash">Cash</option>
+                                            <option value="Bank Transfer">Bank Transfer</option>
+                                            <option value="Cheque">Cheque</option>
+                                            <option value="Other">Other</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Status</label>
+                                        <select class="form-select" name="status">
+                                            <option value="Pending">Pending</option>
+                                            <option value="Paid">Paid</option>
+                                            <option value="Overdue">Overdue</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Due Date</label>
+                                        <input type="date" class="form-control" name="due_date">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Invoice Date</label>
+                                        <input type="date" class="form-control" name="invoice_date">
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </form>
+                    `;
+                }
+
+                return '<p>Form not available</p>';
+            }
+
+            populateEntityDropdown(page) {
+                const isSupplier = page === 'supplier-payments';
+                const entityType = isSupplier ? 'supplier' : 'customer';
+                const select = document.querySelector(`select[name="${entityType}_id"]`);
+
+                if (!select) return;
+
+                $.ajax({
+                    url: `/api/${entityType}s`,
+                    method: 'GET',
+                    success: (data) => {
+                        select.innerHTML = '<option value="">Select</option>';
+                        data.forEach(item => {
+                            select.innerHTML += `<option value="${item.id}">${item.name}</option>`;
+                        });
+                    }
+                });
+            }
+
+            editItem(page, id) {
+                const title = document.getElementById('modalTitle');
+                const body = document.getElementById('modalBody');
+
+                title.textContent = `Edit ${this.getPageTitle(page)}`;
+
+                $.ajax({
+                    url: `/api/${page}/${id}`,
+                    method: 'GET',
+                    success: (data) => {
+                        body.innerHTML = this.getFormHTML(page);
+                        this.modalInstance.show();
+
+                        // Populate form with data
+                        const form = document.getElementById('entityForm');
+                        Object.keys(data).forEach(key => {
+                            const input = form.querySelector(`[name="${key}"]`);
+                            if (input) {
+                                if (input.type === 'date' && data[key]) {
+                                    input.value = data[key].split('T')[0];
+                                } else {
+                                    input.value = data[key];
+                                }
+                            }
+                        });
+
+                        // Populate dropdowns
+                        if (page === 'supplier-payments' || page === 'customer-payments') {
+                            this.populateEntityDropdown(page);
+                            const isSupplier = page === 'supplier-payments';
+                            const entityType = isSupplier ? 'supplier' : 'customer';
+                            const select = form.querySelector(`[name="${entityType}_id"]`);
+                            if (select) {
+                                select.value = data[`${entityType}_id`];
+                            }
+                        }
+
+                        // Change form action to update
+                        form.dataset.id = id;
+                        form.dataset.action = 'update';
+                    }
+                });
+            }
+
+            deleteItem(page, id) {
+                if (!confirm('Are you sure you want to delete this item?')) return;
+
+                $.ajax({
+                    url: `/api/${page}/${id}`,
+                    method: 'DELETE',
+                    success: () => {
+                        this.loadPage(this.currentPage);
+                        this.showSuccess('Item deleted successfully');
+                    },
+                    error: () => {
+                        this.showError('Failed to delete item');
+                    }
+                });
+            }
+
+            importData(file) {
+                const formData = new FormData();
+                formData.append('file', file);
+
+                $.ajax({
+                    url: `/api/import/${this.currentPage}`,
+                    method: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: () => {
+                        this.loadPage(this.currentPage);
+                        this.showSuccess('Data imported successfully');
+                    },
+                    error: () => {
+                        this.showError('Failed to import data');
+                    }
+                });
+            }
+
+            exportData() {
+                window.location.href = `/api/export/${this.currentPage}`;
+            }
+
+            downloadTemplate() {
+                window.location.href = `/api/download-template/${this.currentPage}`;
+            }
+
+            renderLiquidityReport(data) {
+                const container = document.getElementById('contentArea');
+                let html = `
+                    <div class="fade-in">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="row align-items-center">
+                                    <div class="col-md-6">
+                                        <h6 class="mb-0">Monthly Liquidity Schedule</h6>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="input-group">
+                                            <span class="input-group-text">Year</span>
+                                            <input type="number" class="form-control" id="yearFilter" value="${new Date().getFullYear()}">
+                                            <button class="btn btn-primary" onclick="app.filterLiquidity()">
+                                                <i class="bi bi-filter"></i> Filter
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Month</th>
+                                                <th class="text-end">Opening Balance</th>
+                                                <th class="text-end">Inflows</th>
+                                                <th class="text-end">Outflows</th>
+                                                <th class="text-end">Closing Balance</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                `;
+
+                let previousBalance = 0;
+                data.forEach(item => {
+                    const openingBalance = previousBalance;
+                    const closingBalance = openingBalance + item.inflows - item.outflows;
+                    previousBalance = closingBalance;
+
+                    html += `
+                        <tr>
+                            <td><strong>${item.month}</strong></td>
+                            <td class="text-end">${this.formatCurrency(openingBalance)}</td>
+                            <td class="text-end text-success">${this.formatCurrency(item.inflows)}</td>
+                            <td class="text-end text-danger">${this.formatCurrency(item.outflows)}</td>
+                            <td class="text-end ${closingBalance >= 0 ? 'text-success' : 'text-danger'}">
+                                <strong>${this.formatCurrency(closingBalance)}</strong>
+                            </td>
+                        </tr>
+                    `;
+                });
+
+                html += `
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML = html;
+            }
+
+            filterLiquidity() {
+                const year = document.getElementById('yearFilter').value;
+                this.fetchPageData(`liquidity?year=${year}`);
+            }
+
+            showCompanySwitch() {
+                const body = document.getElementById('companyModalBody');
+                body.innerHTML = '<div class="text-center"><div class="spinner-border"></div></div>';
+                this.companyModalInstance.show();
+
+                $.ajax({
+                    url: '/api/companies',
+                    method: 'GET',
+                    success: (data) => {
+                        let html = '<p>Select a company to switch to:</p><div class="list-group">';
+                        data.forEach(company => {
+                            const isActive = company.is_active ? 'active' : '';
+                            const badge = company.is_active ?
+                                '<span class="badge bg-success float-end">Active</span>' :
+                                '<span class="badge bg-secondary float-end">Inactive</span>';
+                            html += `
+                                <button class="list-group-item list-group-item-action ${isActive}"
+                                        onclick="app.switchCompany(${company.id})">
+                                    <h6 class="mb-1">${company.name}</h6>
+                                    <small>${company.currency}</small>
+                                    ${badge}
+                                </button>
+                            `;
+                        });
+                        html += '</div>';
+                        body.innerHTML = html;
+                    }
+                });
+            }
+
+            switchCompany(companyId) {
+                $.ajax({
+                    url: `/api/companies/${companyId}`,
+                    method: 'PUT',
+                    data: JSON.stringify({ is_active: true }),
+                    contentType: 'application/json',
+                    success: () => {
+                        this.companyModalInstance.hide();
+                        this.loadCompanyInfo();
+                        this.loadPage(this.currentPage);
+                        this.showSuccess('Company switched successfully');
+                    },
+                    error: () => {
+                        this.showError('Failed to switch company');
+                    }
+                });
+            }
+
+            showSuccess(message) {
+                // Simple alert for now - can be enhanced with toast notifications
+                alert('Success: ' + message);
+            }
+
+            showError(message) {
+                alert('Error: ' + message);
+            }
+        }
+
+        // Initialize app
+        const app = new PaymentSystem();
+
+        // Event delegation for form submissions
+        document.addEventListener('submit', function(e) {
+            if (e.target.id === 'entityForm') {
+                e.preventDefault();
+                const form = e.target;
+                const formData = new FormData(form);
+                const data = {};
+                formData.forEach((value, key) => {
+                    if (value) data[key] = value;
+                });
+
+                const isUpdate = form.dataset.action === 'update';
+                const id = form.dataset.id || '';
+                const page = app.currentPage;
+                const url = isUpdate ? `/api/${page}/${id}` : `/api/${page}`;
+                const method = isUpdate ? 'PUT' : 'POST';
+
+                $.ajax({
+                    url: url,
+                    method: method,
+                    data: JSON.stringify(data),
+                    contentType: 'application/json',
+                    success: () => {
+                        app.modalInstance.hide();
+                        app.loadPage(page);
+                        app.showSuccess(isUpdate ? 'Updated successfully' : 'Added successfully');
+                    },
+                    error: () => {
+                        app.showError('Failed to save data');
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
