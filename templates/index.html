@@ -28,7 +28,6 @@
             overflow-x: hidden;
         }
 
-        /* Sidebar Styles */
         .sidebar {
             position: fixed;
             left: 0;
@@ -101,16 +100,6 @@
             width: 24px;
         }
 
-        .nav-item .badge {
-            margin-left: auto;
-            background: var(--secondary-color);
-            color: white;
-            padding: 2px 8px;
-            border-radius: 12px;
-            font-size: 0.7rem;
-        }
-
-        /* Main Content */
         .main-content {
             margin-left: var(--sidebar-width);
             padding: 30px;
@@ -118,7 +107,6 @@
             transition: all 0.3s ease;
         }
 
-        /* Page Header */
         .page-header {
             background: white;
             padding: 20px 30px;
@@ -128,6 +116,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
         }
 
         .page-header h4 {
@@ -139,6 +129,7 @@
             display: flex;
             align-items: center;
             gap: 15px;
+            flex-wrap: wrap;
         }
 
         .company-badge {
@@ -149,27 +140,6 @@
             font-size: 0.9rem;
         }
 
-        /* Cards */
-        .card {
-            border: none;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            margin-bottom: 20px;
-        }
-
-        .card-header {
-            background: white;
-            border-bottom: 1px solid #eee;
-            padding: 15px 20px;
-            font-weight: 600;
-            border-radius: 10px 10px 0 0;
-        }
-
-        .card-body {
-            padding: 20px;
-        }
-
-        /* Table Styles */
         .table-container {
             overflow-x: auto;
             background: white;
@@ -204,11 +174,6 @@
         .badge-pending { background: #fff3cd; color: #856404; }
         .badge-overdue { background: #f8d7da; color: #721c24; }
 
-        /* Modal Styles */
-        .modal-content {
-            border-radius: 10px;
-        }
-
         .modal-header {
             background: var(--primary-color);
             color: white;
@@ -219,7 +184,6 @@
             filter: brightness(0) invert(1);
         }
 
-        /* Action Buttons */
         .btn-action {
             padding: 4px 8px;
             margin: 0 2px;
@@ -228,39 +192,6 @@
 
         .btn-edit { color: var(--secondary-color); }
         .btn-delete { color: var(--danger-color); }
-        .btn-view { color: var(--success-color); }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .sidebar {
-                transform: translateX(-100%);
-            }
-
-            .sidebar.active {
-                transform: translateX(0);
-            }
-
-            .main-content {
-                margin-left: 0;
-                padding: 15px;
-            }
-
-            .page-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 10px;
-            }
-        }
-
-        /* Utility Classes */
-        .fade-in {
-            animation: fadeIn 0.3s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
 
         .loading-overlay {
             position: fixed;
@@ -279,23 +210,143 @@
             display: flex;
         }
 
-        .spinner-border {
-            width: 3rem;
-            height: 3rem;
+        .fade-in {
+            animation: fadeIn 0.3s ease;
         }
 
-        .company-switch-btn {
-            cursor: pointer;
-            transition: all 0.3s ease;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .company-switch-btn:hover {
-            transform: scale(1.05);
+        .summary-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
         }
 
-        .nav-sub-item {
-            padding-left: 45px;
+        .summary-card {
+            background: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+
+        .summary-card h6 {
+            margin: 0 0 5px 0;
+            color: #6c757d;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .summary-card h4 {
+            margin: 0;
+            font-weight: 600;
+        }
+
+        .summary-card.bg-success { background: #d4edda; }
+        .summary-card.bg-info { background: #d1ecf1; }
+        .summary-card.bg-warning { background: #fff3cd; }
+        .summary-card.bg-danger { background: #f8d7da; }
+
+        .currency-header {
+            background: var(--primary-color);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            display: inline-block;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .detail-row {
+            background-color: #f8f9fa;
+        }
+
+        .detail-row td {
+            padding-top: 6px !important;
+            padding-bottom: 6px !important;
             font-size: 0.9rem;
+        }
+
+        .detail-row .text-muted {
+            font-size: 0.85rem;
+        }
+
+        .detail-row .badge {
+            font-size: 0.6rem;
+            padding: 2px 6px;
+        }
+
+        .detail-row small {
+            font-size: 0.7rem;
+        }
+
+        .status-filter {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .status-filter .btn {
+            font-size: 0.8rem;
+            padding: 4px 12px;
+        }
+
+        .status-filter .btn.active-filter {
+            background: var(--secondary-color);
+            color: white;
+            border-color: var(--secondary-color);
+        }
+
+        .month-order {
+            font-size: 0.7rem;
+            color: #6c757d;
+            margin-left: 5px;
+        }
+
+        .report-filters {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .report-filters .form-label {
+            font-weight: 600;
+            font-size: 0.85rem;
+            margin-bottom: 4px;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            .sidebar.active {
+                transform: translateX(0);
+            }
+            .main-content {
+                margin-left: 0;
+                padding: 15px;
+            }
+            .page-header {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 10px;
+            }
+            .page-header .company-info {
+                flex-wrap: wrap;
+            }
+            .summary-cards {
+                grid-template-columns: 1fr 1fr;
+            }
+            .status-filter {
+                justify-content: center;
+            }
         }
     </style>
 </head>
@@ -336,14 +387,22 @@
 
         <div class="sidebar-section">
             <div class="sidebar-section-title">Reports</div>
-            <div class="nav-item" data-page="liquidity">
-                <i class="bi bi-graph-up-arrow"></i>
-                <span>Monthly Liquidity</span>
+            <div class="nav-item" data-page="cashflow">
+                <i class="bi bi-cash-stack"></i>
+                <span>Cashflow Report</span>
+            </div>
+            <div class="nav-item" data-page="supplier-payment-report">
+                <i class="bi bi-file-earmark-text"></i>
+                <span>Supplier Payment Report</span>
             </div>
         </div>
 
         <div class="sidebar-section mt-auto">
             <div class="sidebar-section-title">System</div>
+            <div class="nav-item" data-page="companies">
+                <i class="bi bi-building"></i>
+                <span>Companies</span>
+            </div>
             <div class="nav-item company-switch-btn" data-page="switch-company">
                 <i class="bi bi-arrow-left-right"></i>
                 <span>Switch Company</span>
@@ -353,7 +412,6 @@
 
     <!-- Main Content -->
     <div class="main-content" id="mainContent">
-        <!-- Page Header -->
         <div class="page-header">
             <h4 id="pageTitle"><i class="bi bi-people"></i> Suppliers</h4>
             <div class="company-info">
@@ -375,13 +433,15 @@
             </div>
         </div>
 
-        <!-- Content Area -->
         <div id="contentArea">
-            <!-- Dynamic content will be loaded here -->
+            <!-- Dynamic content -->
         </div>
     </div>
 
-    <!-- Add/Edit Modal -->
+    <!-- Hidden file input -->
+    <input type="file" id="fileInput" style="display:none" accept=".xlsx,.xls">
+
+    <!-- Modals -->
     <div class="modal fade" id="itemModal" tabindex="-1">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -396,7 +456,6 @@
         </div>
     </div>
 
-    <!-- Company Switch Modal -->
     <div class="modal fade" id="companyModal" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -411,17 +470,14 @@
         </div>
     </div>
 
-    <!-- Hidden file input -->
-    <input type="file" id="fileInput" style="display:none" accept=".xlsx,.xls">
-
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Main Application
         class PaymentSystem {
             constructor() {
                 this.currentPage = 'suppliers';
                 this.currentCompany = null;
+                this.currentStatusFilter = 'all';
                 this.modalInstance = new bootstrap.Modal(document.getElementById('itemModal'));
                 this.companyModalInstance = new bootstrap.Modal(document.getElementById('companyModal'));
                 this.init();
@@ -434,7 +490,6 @@
             }
 
             setupEventListeners() {
-                // Navigation
                 document.querySelectorAll('.nav-item[data-page]').forEach(item => {
                     item.addEventListener('click', (e) => {
                         const page = item.dataset.page;
@@ -448,12 +503,10 @@
                     });
                 });
 
-                // Add button
                 document.getElementById('addButton').addEventListener('click', () => {
                     this.showAddForm();
                 });
 
-                // Import
                 document.getElementById('importBtn').addEventListener('click', () => {
                     document.getElementById('fileInput').click();
                 });
@@ -464,12 +517,10 @@
                     }
                 });
 
-                // Export
                 document.getElementById('exportBtn').addEventListener('click', () => {
                     this.exportData();
                 });
 
-                // Template
                 document.getElementById('templateBtn').addEventListener('click', () => {
                     this.downloadTemplate();
                 });
@@ -494,19 +545,22 @@
                     'customers': 'Customers',
                     'supplier-payments': 'Supplier Payments',
                     'customer-payments': 'Customer Payments',
-                    'liquidity': 'Monthly Liquidity Report'
+                    'cashflow': 'Cashflow Report',
+                    'supplier-payment-report': 'Supplier Payment Report',
+                    'companies': 'Company Management'
                 };
                 document.getElementById('pageTitle').innerHTML =
                     `<i class="bi ${this.getPageIcon(page)}"></i> ${titles[page] || page}`;
 
-                // Update button visibility
                 const addBtn = document.getElementById('addButton');
-                if (page === 'liquidity') {
+                const btnGroup = document.querySelector('.btn-group');
+
+                if (page === 'cashflow' || page === 'supplier-payment-report' || page === 'companies' || page === 'switch-company') {
                     addBtn.style.display = 'none';
-                    document.querySelector('.btn-group').style.display = 'none';
+                    btnGroup.style.display = 'none';
                 } else {
                     addBtn.style.display = 'inline-block';
-                    document.querySelector('.btn-group').style.display = 'inline-flex';
+                    btnGroup.style.display = 'inline-flex';
                 }
 
                 this.fetchPageData(page);
@@ -518,7 +572,9 @@
                     'customers': 'bi-person',
                     'supplier-payments': 'bi-arrow-up-circle',
                     'customer-payments': 'bi-arrow-down-circle',
-                    'liquidity': 'bi-graph-up-arrow'
+                    'cashflow': 'bi-cash-stack',
+                    'supplier-payment-report': 'bi-file-earmark-text',
+                    'companies': 'bi-building'
                 };
                 return icons[page] || 'bi-table';
             }
@@ -528,8 +584,17 @@
                 loading.classList.add('active');
 
                 let url = `/api/${page}`;
-                if (page === 'liquidity') {
-                    url = '/api/reports/liquidity';
+                if (page === 'cashflow') {
+                    const year = new Date().getFullYear();
+                    url = `/api/reports/cashflow?start_date=${year}-01-01&end_date=${year}-12-31&opening_balance=0`;
+                } else if (page === 'supplier-payment-report') {
+                    url = '/api/reports/supplier-payments';
+                } else if (page === 'companies') {
+                    url = '/api/companies';
+                } else if (page === 'switch-company') {
+                    this.showCompanySwitch();
+                    loading.classList.remove('active');
+                    return;
                 }
 
                 $.ajax({
@@ -537,8 +602,12 @@
                     method: 'GET',
                     success: (data) => {
                         loading.classList.remove('active');
-                        if (page === 'liquidity') {
-                            this.renderLiquidityReport(data);
+                        if (page === 'cashflow') {
+                            this.renderCashflowReport(data);
+                        } else if (page === 'supplier-payment-report') {
+                            this.renderSupplierPaymentReport(data);
+                        } else if (page === 'companies') {
+                            this.renderCompanies(data);
                         } else {
                             this.renderTable(page, data);
                         }
@@ -546,13 +615,110 @@
                     error: (err) => {
                         loading.classList.remove('active');
                         this.showError('Failed to load data');
+                        console.error('Error:', err);
                     }
                 });
             }
 
+            renderCompanies(data) {
+                const container = document.getElementById('contentArea');
+
+                let html = `
+                    <div class="fade-in">
+                        <div class="card">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0">
+                                    <i class="bi bi-building"></i> Company Management
+                                </h5>
+                                <button class="btn btn-primary btn-sm" onclick="app.showAddCompanyForm()">
+                                    <i class="bi bi-plus-circle"></i> Add Company
+                                </button>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-bordered">
+                                        <thead class="table-dark">
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Name</th>
+                                                <th>Currency</th>
+                                                <th>Status</th>
+                                                <th>Bank</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            ${data.length === 0 ? `
+                                                <tr>
+                                                    <td colspan="6" class="text-center text-muted py-4">
+                                                        <i class="bi bi-building fs-1 d-block mb-2"></i>
+                                                        No companies found
+                                                    </td>
+                                                </tr>
+                                            ` : data.map((company, index) => `
+                                                <tr>
+                                                    <td>${index + 1}</td>
+                                                    <td><strong>${company.name}</strong></td>
+                                                    <td>${company.currency}</td>
+                                                    <td>
+                                                        ${company.is_active ?
+                                                            '<span class="badge bg-success">Active</span>' :
+                                                            '<span class="badge bg-secondary">Inactive</span>'
+                                                        }
+                                                    </td>
+                                                    <td>${company.bank_name || '-'}</td>
+                                                    <td>
+                                                        <button class="btn btn-sm btn-action btn-edit" onclick="app.editCompany(${company.id})">
+                                                            <i class="bi bi-pencil"></i>
+                                                        </button>
+                                                        <button class="btn btn-sm btn-action btn-delete" onclick="app.deleteCompany(${company.id})">
+                                                            <i class="bi bi-trash"></i>
+                                                        </button>
+                                                        ${!company.is_active ? `
+                                                            <button class="btn btn-sm btn-success" onclick="app.activateCompany(${company.id})">
+                                                                <i class="bi bi-check-circle"></i> Activate
+                                                            </button>
+                                                        ` : `
+                                                            <span class="badge bg-info">Active Company</span>
+                                                        `}
+                                                    </td>
+                                                </tr>
+                                            `).join('')}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML = html;
+            }
+
             renderTable(page, data) {
                 const container = document.getElementById('contentArea');
-                let html = '<div class="table-container fade-in"><table class="table table-hover"><thead><tr>';
+                let html = '<div class="table-container fade-in">';
+
+                const bulkDeletePages = ['suppliers', 'supplier-payments', 'customer-payments'];
+                if (bulkDeletePages.includes(page)) {
+                    const methodName = this.getBulkDeleteMethodName(page);
+                    const selectAllMethod = this.getSelectAllMethodName(page);
+                    html += `
+                        <div class="mb-3">
+                            <button class="btn btn-danger btn-sm" onclick="app.${methodName}()">
+                                <i class="bi bi-trash3"></i> Delete Selected
+                            </button>
+                            <button class="btn btn-secondary btn-sm" onclick="app.${selectAllMethod}()">
+                                <i class="bi bi-check-all"></i> Select All
+                            </button>
+                        </div>
+                    `;
+                }
+
+                html += '<table class="table table-hover"><thead><tr>';
+
+                if (bulkDeletePages.includes(page)) {
+                    html += '<th><input type="checkbox" id="selectAllCheckbox" onchange="app.toggleAllCheckboxes(this)"></th>';
+                }
 
                 const columns = this.getTableColumns(page);
                 columns.forEach(col => {
@@ -561,17 +727,25 @@
                 html += '<th>Actions</th></tr></thead><tbody>';
 
                 if (data.length === 0) {
-                    html += `<tr><td colspan="${columns.length + 1}" class="text-center">No records found</td></tr>`;
+                    const colspan = columns.length + (bulkDeletePages.includes(page) ? 2 : 1);
+                    html += `<tr><td colspan="${colspan}" class="text-center text-muted py-4">
+                        <i class="bi bi-inbox fs-1 d-block mb-2"></i>
+                        No records found
+                    </td></tr>`;
                 } else {
                     data.forEach(item => {
                         html += '<tr>';
+                        if (bulkDeletePages.includes(page)) {
+                            const name = this.getCheckboxName(page);
+                            html += `<td><input type="checkbox" name="${name}" value="${item.id}"></td>`;
+                        }
                         columns.forEach(col => {
                             let value = item[col.key] || '';
                             if (col.key === 'status') {
                                 value = this.getStatusBadge(value);
                             }
-                            if (col.key === 'amount') {
-                                value = this.formatCurrency(value);
+                            if (col.key === 'amount' || col.key === 'amount_formatted') {
+                                value = this.formatCurrency(item.amount || 0);
                             }
                             html += `<td>${value}</td>`;
                         });
@@ -637,8 +811,35 @@
             }
 
             formatCurrency(amount) {
-                if (!amount) return '0.00';
-                return `${this.currentCompany?.currency || 'GHS'} ${parseFloat(amount).toFixed(2)}`;
+                if (!amount && amount !== 0) return '0.00';
+                return parseFloat(amount).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            }
+
+            getBulkDeleteMethodName(page) {
+                const map = {
+                    'suppliers': 'deleteMultipleSuppliers',
+                    'supplier-payments': 'deleteMultipleSupplierPayments',
+                    'customer-payments': 'deleteMultipleCustomerPayments'
+                };
+                return map[page] || '';
+            }
+
+            getSelectAllMethodName(page) {
+                const map = {
+                    'suppliers': 'selectAllSuppliers',
+                    'supplier-payments': 'selectAllSupplierPayments',
+                    'customer-payments': 'selectAllCustomerPayments'
+                };
+                return map[page] || '';
+            }
+
+            getCheckboxName(page) {
+                const map = {
+                    'suppliers': 'selected_supplier',
+                    'supplier-payments': 'selected_supplier_payment',
+                    'customer-payments': 'selected_customer_payment'
+                };
+                return map[page] || '';
             }
 
             showAddForm() {
@@ -646,13 +847,12 @@
                 const title = document.getElementById('modalTitle');
                 const body = document.getElementById('modalBody');
 
-                if (page === 'liquidity') return;
+                if (page === 'cashflow' || page === 'supplier-payment-report' || page === 'companies' || page === 'switch-company') return;
 
                 title.textContent = `Add New ${this.getPageTitle(page)}`;
                 body.innerHTML = this.getFormHTML(page);
                 this.modalInstance.show();
 
-                // Populate dropdowns if needed
                 if (page === 'supplier-payments' || page === 'customer-payments') {
                     this.populateEntityDropdown(page);
                 }
@@ -776,7 +976,7 @@
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label class="form-label">Amount *</label>
-                                        <input type="number" step="0.01" class="form-control" name="amount" required>
+                                        <input type="text" class="form-control" name="amount" required placeholder="e.g., 1,234.56">
                                     </div>
                                 </div>
                             </div>
@@ -857,20 +1057,20 @@
                         body.innerHTML = this.getFormHTML(page);
                         this.modalInstance.show();
 
-                        // Populate form with data
                         const form = document.getElementById('entityForm');
                         Object.keys(data).forEach(key => {
                             const input = form.querySelector(`[name="${key}"]`);
                             if (input) {
                                 if (input.type === 'date' && data[key]) {
                                     input.value = data[key].split('T')[0];
+                                } else if (key === 'amount' && data[key]) {
+                                    input.value = parseFloat(data[key]).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                                 } else {
                                     input.value = data[key];
                                 }
                             }
                         });
 
-                        // Populate dropdowns
                         if (page === 'supplier-payments' || page === 'customer-payments') {
                             this.populateEntityDropdown(page);
                             const isSupplier = page === 'supplier-payments';
@@ -881,9 +1081,11 @@
                             }
                         }
 
-                        // Change form action to update
                         form.dataset.id = id;
                         form.dataset.action = 'update';
+                    },
+                    error: () => {
+                        this.showError('Failed to load item data');
                     }
                 });
             }
@@ -904,91 +1106,631 @@
                 });
             }
 
-            importData(file) {
-                const formData = new FormData();
-                formData.append('file', file);
+            // ============ MULTIPLE DELETE METHODS ============
+            deleteMultipleSuppliers() {
+                const selected = document.querySelectorAll('input[name="selected_supplier"]:checked');
+                if (selected.length === 0) {
+                    this.showError('Please select at least one supplier to delete');
+                    return;
+                }
+
+                if (!confirm(`Are you sure you want to delete ${selected.length} supplier(s)?`)) return;
+
+                const ids = Array.from(selected).map(cb => parseInt(cb.value));
 
                 $.ajax({
-                    url: `/api/import/${this.currentPage}`,
+                    url: '/api/suppliers/delete-multiple',
                     method: 'POST',
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    success: () => {
-                        this.loadPage(this.currentPage);
-                        this.showSuccess('Data imported successfully');
+                    data: JSON.stringify({ ids: ids }),
+                    contentType: 'application/json',
+                    success: (response) => {
+                        this.loadPage('suppliers');
+                        this.showSuccess(response.message);
                     },
                     error: () => {
-                        this.showError('Failed to import data');
+                        this.showError('Failed to delete suppliers');
                     }
                 });
             }
 
-            exportData() {
-                window.location.href = `/api/export/${this.currentPage}`;
+            deleteMultipleSupplierPayments() {
+                const selected = document.querySelectorAll('input[name="selected_supplier_payment"]:checked');
+                if (selected.length === 0) {
+                    this.showError('Please select at least one payment to delete');
+                    return;
+                }
+
+                if (!confirm(`Are you sure you want to delete ${selected.length} payment(s)?`)) return;
+
+                const ids = Array.from(selected).map(cb => parseInt(cb.value));
+
+                $.ajax({
+                    url: '/api/supplier-payments/delete-multiple',
+                    method: 'POST',
+                    data: JSON.stringify({ ids: ids }),
+                    contentType: 'application/json',
+                    success: (response) => {
+                        this.loadPage('supplier-payments');
+                        this.showSuccess(response.message);
+                    },
+                    error: () => {
+                        this.showError('Failed to delete payments');
+                    }
+                });
             }
 
-            downloadTemplate() {
-                window.location.href = `/api/download-template/${this.currentPage}`;
+            deleteMultipleCustomerPayments() {
+                const selected = document.querySelectorAll('input[name="selected_customer_payment"]:checked');
+                if (selected.length === 0) {
+                    this.showError('Please select at least one payment to delete');
+                    return;
+                }
+
+                if (!confirm(`Are you sure you want to delete ${selected.length} payment(s)?`)) return;
+
+                const ids = Array.from(selected).map(cb => parseInt(cb.value));
+
+                $.ajax({
+                    url: '/api/customer-payments/delete-multiple',
+                    method: 'POST',
+                    data: JSON.stringify({ ids: ids }),
+                    contentType: 'application/json',
+                    success: (response) => {
+                        this.loadPage('customer-payments');
+                        this.showSuccess(response.message);
+                    },
+                    error: () => {
+                        this.showError('Failed to delete payments');
+                    }
+                });
             }
 
-            renderLiquidityReport(data) {
+            // ============ SELECT ALL METHODS ============
+            toggleAllCheckboxes(masterCheckbox) {
+                const checkboxes = document.querySelectorAll('input[type="checkbox"][name^="selected_"]');
+                checkboxes.forEach(cb => cb.checked = masterCheckbox.checked);
+            }
+
+            selectAllSuppliers() {
+                document.querySelectorAll('input[name="selected_supplier"]').forEach(cb => cb.checked = true);
+            }
+
+            selectAllSupplierPayments() {
+                document.querySelectorAll('input[name="selected_supplier_payment"]').forEach(cb => cb.checked = true);
+            }
+
+            selectAllCustomerPayments() {
+                document.querySelectorAll('input[name="selected_customer_payment"]').forEach(cb => cb.checked = true);
+            }
+
+            // ============ CASHFLOW REPORT METHODS ============
+            renderCashflowReport(data) {
                 const container = document.getElementById('contentArea');
+
+                const months = data.months || [];
+                const rowData = data.row_data || {};
+                const monthlyData = data.monthly_data || {};
+
+                const totalInflows = data.total_inflows || 0;
+                const totalOutflows = data.total_outflows || 0;
+                const totalNet = data.total_net || 0;
+
+                const currency = this.currentCompany?.currency || 'GHS';
+
+                // Filter payments by status
+                const filteredMonthlyData = {};
+                months.forEach(month => {
+                    const m = monthlyData[month] || {};
+                    filteredMonthlyData[month] = {
+                        ...m,
+                        inflow_items: (m.inflow_items || []).filter(item =>
+                            this.currentStatusFilter === 'all' || item.status === this.currentStatusFilter
+                        ),
+                        outflow_items: (m.outflow_items || []).filter(item =>
+                            this.currentStatusFilter === 'all' || item.status === this.currentStatusFilter
+                        )
+                    };
+                });
+
+                // Get all unique transaction descriptions for inflows
+                const allInflowDescriptions = [];
+                months.forEach(month => {
+                    const items = filteredMonthlyData[month]?.inflow_items || [];
+                    items.forEach(item => {
+                        const desc = item.description || 'Customer Payment';
+                        if (!allInflowDescriptions.includes(desc)) {
+                            allInflowDescriptions.push(desc);
+                        }
+                    });
+                });
+
+                // Get all unique transaction descriptions for outflows
+                const allOutflowDescriptions = [];
+                months.forEach(month => {
+                    const items = filteredMonthlyData[month]?.outflow_items || [];
+                    items.forEach(item => {
+                        const desc = item.description || 'Supplier Payment';
+                        if (!allOutflowDescriptions.includes(desc)) {
+                            allOutflowDescriptions.push(desc);
+                        }
+                    });
+                });
+
+                // Sort descriptions alphabetically
+                allInflowDescriptions.sort();
+                allOutflowDescriptions.sort();
+
+                const monthOrderDisplay = months.length > 0 ?
+                    `<span class="month-order">(${months.length} months - ${months[0]} to ${months[months.length-1]})</span>` : '';
+
                 let html = `
                     <div class="fade-in">
                         <div class="card">
                             <div class="card-header">
                                 <div class="row align-items-center">
-                                    <div class="col-md-6">
-                                        <h6 class="mb-0">Monthly Liquidity Schedule</h6>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="input-group">
-                                            <span class="input-group-text">Year</span>
-                                            <input type="number" class="form-control" id="yearFilter" value="${new Date().getFullYear()}">
-                                            <button class="btn btn-primary" onclick="app.filterLiquidity()">
-                                                <i class="bi bi-filter"></i> Filter
-                                            </button>
-                                        </div>
+                                    <div class="col-md-12">
+                                        <h5 class="mb-0">
+                                            <i class="bi bi-cash-stack"></i> Cashflow Report
+                                            <small class="text-muted ms-2">${data.start_date} to ${data.end_date}</small>
+                                            ${monthOrderDisplay}
+                                        </h5>
                                     </div>
                                 </div>
                             </div>
                             <div class="card-body">
+                                <!-- Filter Section -->
+                                <div class="row g-3 mb-4">
+                                    <div class="col-md-3">
+                                        <label class="form-label">Start Date</label>
+                                        <input type="date" class="form-control" id="startDate" value="${data.start_date}">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="form-label">End Date</label>
+                                        <input type="date" class="form-control" id="endDate" value="${data.end_date}">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="form-label">Opening Balance</label>
+                                        <input type="number" class="form-control" id="openingBalance" step="0.01" value="${data.opening_balance}">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="form-label">&nbsp;</label>
+                                        <button class="btn btn-primary w-100" onclick="app.runCashflowReport()">
+                                            <i class="bi bi-play-fill"></i> Run Report
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Status Filter -->
+                                <div class="row mb-4">
+                                    <div class="col-md-12">
+                                        <label class="form-label">Filter by Status</label>
+                                        <div class="status-filter">
+                                            <button class="btn btn-outline-secondary ${this.currentStatusFilter === 'all' ? 'active-filter' : ''}"
+                                                    onclick="app.setStatusFilter('all')">
+                                                All
+                                            </button>
+                                            <button class="btn btn-outline-success ${this.currentStatusFilter === 'Paid' ? 'active-filter' : ''}"
+                                                    onclick="app.setStatusFilter('Paid')">
+                                                Paid
+                                            </button>
+                                            <button class="btn btn-outline-warning ${this.currentStatusFilter === 'Pending' ? 'active-filter' : ''}"
+                                                    onclick="app.setStatusFilter('Pending')">
+                                                Pending
+                                            </button>
+                                            <button class="btn btn-outline-danger ${this.currentStatusFilter === 'Overdue' ? 'active-filter' : ''}"
+                                                    onclick="app.setStatusFilter('Overdue')">
+                                                Overdue
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Currency Header -->
+                                <div class="currency-header">
+                                    <i class="bi bi-currency-dollar"></i> Currency: ${currency}
+                                </div>
+
+                                <!-- Summary Cards -->
+                                <div class="row g-3 mb-4">
+                                    <div class="col-md-3">
+                                        <div class="summary-card bg-success">
+                                            <h6>Opening Balance</h6>
+                                            <h4>${this.formatCurrency(data.opening_balance)}</h4>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="summary-card bg-info">
+                                            <h6>Total Inflows</h6>
+                                            <h4>${this.formatCurrency(totalInflows)}</h4>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="summary-card bg-warning">
+                                            <h6>Total Outflows</h6>
+                                            <h4>${this.formatCurrency(totalOutflows)}</h4>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="summary-card ${totalNet >= 0 ? 'bg-success' : 'bg-danger'}">
+                                            <h6>Net Cashflow</h6>
+                                            <h4>${this.formatCurrency(totalNet)}</h4>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Main Cashflow Table -->
                                 <div class="table-responsive">
-                                    <table class="table table-hover">
-                                        <thead>
+                                    <table class="table table-hover table-bordered">
+                                        <thead class="table-dark">
                                             <tr>
-                                                <th>Month</th>
-                                                <th class="text-end">Opening Balance</th>
-                                                <th class="text-end">Inflows</th>
-                                                <th class="text-end">Outflows</th>
-                                                <th class="text-end">Closing Balance</th>
+                                                <th style="min-width: 200px;">Category / Description</th>
+                                                ${months.map(m => `<th class="text-center">${m}</th>`).join('')}
+                                                <th class="text-end">Total</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                `;
+                                            <!-- Opening Balance Row -->
+                                            <tr class="table-secondary">
+                                                <td><strong>Opening Balance</strong></td>
+                                                ${rowData.opening_balances?.map(val => `
+                                                    <td class="text-end">${this.formatCurrency(val)}</td>
+                                                `).join('')}
+                                                <td class="text-end"><strong>${this.formatCurrency(data.opening_balance)}</strong></td>
+                                            </tr>
 
-                let previousBalance = 0;
-                data.forEach(item => {
-                    const openingBalance = previousBalance;
-                    const closingBalance = openingBalance + item.inflows - item.outflows;
-                    previousBalance = closingBalance;
+                                            <!-- Inflows Header Row -->
+                                            <tr class="table-success">
+                                                <td><strong><i class="bi bi-arrow-down-circle"></i> Inflows</strong></td>
+                                                ${rowData.inflows?.map(val => `
+                                                    <td class="text-end"><strong>${this.formatCurrency(val)}</strong></td>
+                                                `).join('')}
+                                                <td class="text-end"><strong>${this.formatCurrency(totalInflows)}</strong></td>
+                                            </tr>
 
-                    html += `
-                        <tr>
-                            <td><strong>${item.month}</strong></td>
-                            <td class="text-end">${this.formatCurrency(openingBalance)}</td>
-                            <td class="text-end text-success">${this.formatCurrency(item.inflows)}</td>
-                            <td class="text-end text-danger">${this.formatCurrency(item.outflows)}</td>
-                            <td class="text-end ${closingBalance >= 0 ? 'text-success' : 'text-danger'}">
-                                <strong>${this.formatCurrency(closingBalance)}</strong>
-                            </td>
-                        </tr>
-                    `;
-                });
+                                            <!-- Inflow Detail Rows -->
+                                            ${allInflowDescriptions.length > 0 ? allInflowDescriptions.map(desc => {
+                                                let descTotal = 0;
+                                                months.forEach(month => {
+                                                    const items = filteredMonthlyData[month]?.inflow_items || [];
+                                                    const item = items.find(i => (i.description || 'Customer Payment') === desc);
+                                                    if (item) descTotal += item.amount;
+                                                });
+                                                return `
+                                                    <tr class="detail-row">
+                                                        <td style="padding-left: 30px;">
+                                                            <span class="text-muted">${desc}</span>
+                                                        </td>
+                                                        ${months.map(month => {
+                                                            const items = filteredMonthlyData[month]?.inflow_items || [];
+                                                            const item = items.find(i => (i.description || 'Customer Payment') === desc);
+                                                            const amount = item ? item.amount : 0;
+                                                            const status = item ? item.status : '';
+                                                            const customer = item ? item.customer : '';
+                                                            return `
+                                                                <td class="text-end">
+                                                                    ${amount > 0 ? `
+                                                                        <span class="text-success">${this.formatCurrency(amount)}</span>
+                                                                        <br>
+                                                                        <small class="text-muted">${customer}</small>
+                                                                        <br>
+                                                                        <span class="badge ${status === 'Paid' ? 'bg-success' : status === 'Pending' ? 'bg-warning' : 'bg-danger'}">
+                                                                            ${status || 'Pending'}
+                                                                        </span>
+                                                                    ` : '-'}
+                                                                </td>
+                                                            `;
+                                                        }).join('')}
+                                                        <td class="text-end">
+                                                            ${descTotal > 0 ? `<strong class="text-success">${this.formatCurrency(descTotal)}</strong>` : '-'}
+                                                        </td>
+                                                    </tr>
+                                                `;
+                                            }).join('') : `
+                                                <tr class="detail-row">
+                                                    <td style="padding-left: 30px;" colspan="${months.length + 2}" class="text-muted text-center">
+                                                        No inflow transactions found
+                                                    </td>
+                                                </tr>
+                                            `}
 
-                html += `
+                                            <!-- Outflows Header Row -->
+                                            <tr class="table-danger">
+                                                <td><strong><i class="bi bi-arrow-up-circle"></i> Outflows</strong></td>
+                                                ${rowData.outflows?.map(val => `
+                                                    <td class="text-end"><strong>${this.formatCurrency(val)}</strong></td>
+                                                `).join('')}
+                                                <td class="text-end"><strong>${this.formatCurrency(totalOutflows)}</strong></td>
+                                            </tr>
+
+                                            <!-- Outflow Detail Rows -->
+                                            ${allOutflowDescriptions.length > 0 ? allOutflowDescriptions.map(desc => {
+                                                let descTotal = 0;
+                                                months.forEach(month => {
+                                                    const items = filteredMonthlyData[month]?.outflow_items || [];
+                                                    const item = items.find(i => (i.description || 'Supplier Payment') === desc);
+                                                    if (item) descTotal += item.amount;
+                                                });
+                                                return `
+                                                    <tr class="detail-row">
+                                                        <td style="padding-left: 30px;">
+                                                            <span class="text-muted">${desc}</span>
+                                                        </td>
+                                                        ${months.map(month => {
+                                                            const items = filteredMonthlyData[month]?.outflow_items || [];
+                                                            const item = items.find(i => (i.description || 'Supplier Payment') === desc);
+                                                            const amount = item ? item.amount : 0;
+                                                            const status = item ? item.status : '';
+                                                            const supplier = item ? item.supplier : '';
+                                                            return `
+                                                                <td class="text-end">
+                                                                    ${amount > 0 ? `
+                                                                        <span class="text-danger">${this.formatCurrency(amount)}</span>
+                                                                        <br>
+                                                                        <small class="text-muted">${supplier}</small>
+                                                                        <br>
+                                                                        <span class="badge ${status === 'Paid' ? 'bg-success' : status === 'Pending' ? 'bg-warning' : 'bg-danger'}">
+                                                                            ${status || 'Pending'}
+                                                                        </span>
+                                                                    ` : '-'}
+                                                                </td>
+                                                            `;
+                                                        }).join('')}
+                                                        <td class="text-end">
+                                                            ${descTotal > 0 ? `<strong class="text-danger">${this.formatCurrency(descTotal)}</strong>` : '-'}
+                                                        </td>
+                                                    </tr>
+                                                `;
+                                            }).join('') : `
+                                                <tr class="detail-row">
+                                                    <td style="padding-left: 30px;" colspan="${months.length + 2}" class="text-muted text-center">
+                                                        No outflow transactions found
+                                                    </td>
+                                                </tr>
+                                            `}
+
+                                            <!-- Net Row -->
+                                            <tr class="table-info">
+                                                <td><strong><i class="bi bi-calculator"></i> Net</strong></td>
+                                                ${rowData.net?.map(val => `
+                                                    <td class="text-end ${val >= 0 ? 'text-success' : 'text-danger'}">
+                                                        <strong>${this.formatCurrency(val)}</strong>
+                                                    </td>
+                                                `).join('')}
+                                                <td class="text-end ${totalNet >= 0 ? 'text-success' : 'text-danger'}">
+                                                    <strong>${this.formatCurrency(totalNet)}</strong>
+                                                </td>
+                                            </tr>
+
+                                            <!-- Closing Balance Row -->
+                                            <tr class="table-secondary">
+                                                <td><strong>Closing Balance</strong></td>
+                                                ${rowData.closing_balances?.map(val => `
+                                                    <td class="text-end">${this.formatCurrency(val)}</td>
+                                                `).join('')}
+                                                <td class="text-end"><strong>${this.formatCurrency(data.closing_balance)}</strong></td>
+                                            </tr>
                                         </tbody>
+                                    </table>
+                                </div>
+
+                                <!-- No Data Message -->
+                                ${totalInflows === 0 && totalOutflows === 0 ? `
+                                <div class="alert alert-warning mt-3">
+                                    <i class="bi bi-exclamation-triangle"></i>
+                                    <strong>No payments found in this date range</strong>
+                                    <ul class="mb-0 mt-2">
+                                        <li>Make sure you have added supplier payments and customer payments</li>
+                                        <li>Ensure payments have a <strong>Due Date</strong> or <strong>Invoice Date</strong> set</li>
+                                        <li>Try expanding the date range</li>
+                                    </ul>
+                                </div>
+                                ` : ''}
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML = html;
+            }
+
+            setStatusFilter(status) {
+                this.currentStatusFilter = status;
+                const startDate = document.getElementById('startDate')?.value;
+                const endDate = document.getElementById('endDate')?.value;
+                const openingBalance = document.getElementById('openingBalance')?.value || 0;
+
+                if (startDate && endDate) {
+                    const loading = document.getElementById('loadingOverlay');
+                    loading.classList.add('active');
+
+                    $.ajax({
+                        url: `/api/reports/cashflow?start_date=${startDate}&end_date=${endDate}&opening_balance=${openingBalance}`,
+                        method: 'GET',
+                        success: (data) => {
+                            loading.classList.remove('active');
+                            this.renderCashflowReport(data);
+                        },
+                        error: (err) => {
+                            loading.classList.remove('active');
+                            this.showError('Failed to refresh report');
+                            console.error('Error:', err);
+                        }
+                    });
+                }
+            }
+
+            runCashflowReport() {
+                const startDate = document.getElementById('startDate').value;
+                const endDate = document.getElementById('endDate').value;
+                const openingBalance = document.getElementById('openingBalance').value || 0;
+
+                if (!startDate || !endDate) {
+                    this.showError('Please select start and end dates');
+                    return;
+                }
+
+                if (startDate > endDate) {
+                    this.showError('Start date cannot be after end date');
+                    return;
+                }
+
+                const loading = document.getElementById('loadingOverlay');
+                loading.classList.add('active');
+
+                $.ajax({
+                    url: `/api/reports/cashflow?start_date=${startDate}&end_date=${endDate}&opening_balance=${openingBalance}`,
+                    method: 'GET',
+                    success: (data) => {
+                        loading.classList.remove('active');
+                        this.renderCashflowReport(data);
+                        this.showSuccess(`Cashflow report generated for ${startDate} to ${endDate}`);
+                    },
+                    error: (err) => {
+                        loading.classList.remove('active');
+                        this.showError('Failed to generate report');
+                        console.error('Error:', err);
+                    }
+                });
+            }
+
+            // ============ SUPPLIER PAYMENT REPORT ============
+            renderSupplierPaymentReport(data) {
+                const container = document.getElementById('contentArea');
+                const payments = data.payments || [];
+                const suppliers = data.suppliers || [];
+                const filters = data.filters || {};
+
+                const totalAmount = payments.reduce((sum, p) => sum + (p.amount || 0), 0);
+                const currency = this.currentCompany?.currency || 'GHS';
+
+                let html = `
+                    <div class="fade-in">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="mb-0">
+                                    <i class="bi bi-file-earmark-text"></i> Supplier Payment Report
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <!-- Filter Section -->
+                                <div class="report-filters">
+                                    <div class="row g-3">
+                                        <div class="col-md-3">
+                                            <label class="form-label">Supplier</label>
+                                            <select class="form-select" id="reportSupplierFilter">
+                                                <option value="all">All Suppliers</option>
+                                                ${suppliers.map(s => `
+                                                    <option value="${s.id}" ${filters.supplier_id == s.id ? 'selected' : ''}>
+                                                        ${s.name}
+                                                    </option>
+                                                `).join('')}
+                                            </select>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label class="form-label">Status</label>
+                                            <select class="form-select" id="reportStatusFilter">
+                                                <option value="all" ${filters.status === 'all' || !filters.status ? 'selected' : ''}>All Status</option>
+                                                <option value="Paid" ${filters.status === 'Paid' ? 'selected' : ''}>Paid</option>
+                                                <option value="Pending" ${filters.status === 'Pending' ? 'selected' : ''}>Pending</option>
+                                                <option value="Overdue" ${filters.status === 'Overdue' ? 'selected' : ''}>Overdue</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label class="form-label">Start Date</label>
+                                            <input type="date" class="form-control" id="reportStartDate" value="${filters.start_date || ''}">
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label class="form-label">End Date</label>
+                                            <input type="date" class="form-control" id="reportEndDate" value="${filters.end_date || ''}">
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label class="form-label">&nbsp;</label>
+                                            <button class="btn btn-primary w-100" onclick="app.runSupplierPaymentReport()">
+                                                <i class="bi bi-play-fill"></i> Apply Filters
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Summary Cards -->
+                                <div class="row g-3 mb-4">
+                                    <div class="col-md-3">
+                                        <div class="summary-card bg-info">
+                                            <h6>Total Payments</h6>
+                                            <h4>${payments.length}</h4>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="summary-card bg-success">
+                                            <h6>Total Amount</h6>
+                                            <h4>${this.formatCurrency(totalAmount)}</h4>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="summary-card bg-warning">
+                                            <h6>Paid</h6>
+                                            <h4>${payments.filter(p => p.status === 'Paid').length}</h4>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="summary-card bg-danger">
+                                            <h6>Pending/Overdue</h6>
+                                            <h4>${payments.filter(p => p.status !== 'Paid').length}</h4>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Currency Header -->
+                                <div class="currency-header">
+                                    <i class="bi bi-currency-dollar"></i> Currency: ${currency}
+                                </div>
+
+                                <!-- Payments Table -->
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-bordered">
+                                        <thead class="table-dark">
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Supplier</th>
+                                                <th>Description</th>
+                                                <th>Invoice Ref</th>
+                                                <th class="text-end">Amount</th>
+                                                <th>Type</th>
+                                                <th>Due Date</th>
+                                                <th>Invoice Date</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            ${payments.length === 0 ? `
+                                                <tr>
+                                                    <td colspan="9" class="text-center text-muted py-4">
+                                                        <i class="bi bi-inbox fs-1 d-block mb-2"></i>
+                                                        No supplier payments found matching the filters
+                                                    </td>
+                                                </tr>
+                                            ` : payments.map((p, index) => `
+                                                <tr>
+                                                    <td>${index + 1}</td>
+                                                    <td><strong>${p.supplier_name}</strong></td>
+                                                    <td>${p.payment_description || '-'}</td>
+                                                    <td>${p.invoice_ref || '-'}</td>
+                                                    <td class="text-end"><strong>${this.formatCurrency(p.amount)}</strong></td>
+                                                    <td>${p.type || '-'}</td>
+                                                    <td>${p.due_date || '-'}</td>
+                                                    <td>${p.invoice_date || '-'}</td>
+                                                    <td>${this.getStatusBadge(p.status)}</td>
+                                                </tr>
+                                            `).join('')}
+                                        </tbody>
+                                        ${payments.length > 0 ? `
+                                        <tfoot class="table-secondary">
+                                            <tr>
+                                                <td colspan="4" class="text-end"><strong>TOTAL</strong></td>
+                                                <td class="text-end"><strong>${this.formatCurrency(totalAmount)}</strong></td>
+                                                <td colspan="4"></td>
+                                            </tr>
+                                        </tfoot>
+                                        ` : ''}
                                     </table>
                                 </div>
                             </div>
@@ -998,11 +1740,190 @@
                 container.innerHTML = html;
             }
 
-            filterLiquidity() {
-                const year = document.getElementById('yearFilter').value;
-                this.fetchPageData(`liquidity?year=${year}`);
+            runSupplierPaymentReport() {
+                const supplierId = document.getElementById('reportSupplierFilter').value;
+                const status = document.getElementById('reportStatusFilter').value;
+                const startDate = document.getElementById('reportStartDate').value;
+                const endDate = document.getElementById('reportEndDate').value;
+
+                const loading = document.getElementById('loadingOverlay');
+                loading.classList.add('active');
+
+                let url = `/api/reports/supplier-payments?supplier_id=${supplierId}&status=${status}`;
+                if (startDate) url += `&start_date=${startDate}`;
+                if (endDate) url += `&end_date=${endDate}`;
+
+                $.ajax({
+                    url: url,
+                    method: 'GET',
+                    success: (data) => {
+                        loading.classList.remove('active');
+                        this.renderSupplierPaymentReport(data);
+                        this.showSuccess('Report updated successfully');
+                    },
+                    error: (err) => {
+                        loading.classList.remove('active');
+                        this.showError('Failed to generate report');
+                        console.error('Error:', err);
+                    }
+                });
             }
 
+            // ============ COMPANY MANAGEMENT METHODS ============
+            showAddCompanyForm() {
+                const title = document.getElementById('modalTitle');
+                const body = document.getElementById('modalBody');
+
+                title.textContent = 'Add New Company';
+                body.innerHTML = this.getCompanyFormHTML();
+                this.modalInstance.show();
+            }
+
+            editCompany(companyId) {
+                const title = document.getElementById('modalTitle');
+                const body = document.getElementById('modalBody');
+
+                title.textContent = 'Edit Company';
+
+                $.ajax({
+                    url: `/api/companies/${companyId}`,
+                    method: 'GET',
+                    success: (data) => {
+                        body.innerHTML = this.getCompanyFormHTML(data);
+                        this.modalInstance.show();
+
+                        const form = document.getElementById('companyForm');
+                        form.dataset.id = companyId;
+                        form.dataset.action = 'update';
+                    },
+                    error: () => {
+                        this.showError('Failed to load company data');
+                    }
+                });
+            }
+
+            getCompanyFormHTML(company = null) {
+                const c = company || {};
+                return `
+                    <form id="companyForm">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Company Name *</label>
+                                    <input type="text" class="form-control" name="name" required
+                                           value="${c.name || ''}" placeholder="Enter company name">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Currency *</label>
+                                    <select class="form-select" name="currency" required>
+                                        <option value="GHS" ${c.currency === 'GHS' ? 'selected' : ''}>GHS - Ghana Cedi</option>
+                                        <option value="USD" ${c.currency === 'USD' ? 'selected' : ''}>USD - US Dollar</option>
+                                        <option value="EUR" ${c.currency === 'EUR' ? 'selected' : ''}>EUR - Euro</option>
+                                        <option value="GBP" ${c.currency === 'GBP' ? 'selected' : ''}>GBP - British Pound</option>
+                                        <option value="NGN" ${c.currency === 'NGN' ? 'selected' : ''}>NGN - Nigerian Naira</option>
+                                        <option value="KES" ${c.currency === 'KES' ? 'selected' : ''}>KES - Kenyan Shilling</option>
+                                        <option value="ZAR" ${c.currency === 'ZAR' ? 'selected' : ''}>ZAR - South African Rand</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Address</label>
+                            <textarea class="form-control" name="address" rows="2" placeholder="Enter company address">${c.address || ''}</textarea>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Telephone</label>
+                                    <input type="text" class="form-control" name="telephone" value="${c.telephone || ''}" placeholder="Enter telephone number">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Bank Name</label>
+                                    <input type="text" class="form-control" name="bank_name" value="${c.bank_name || ''}" placeholder="Enter bank name">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Account Number</label>
+                                    <input type="text" class="form-control" name="account_number" value="${c.account_number || ''}" placeholder="Enter account number">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Account Name</label>
+                                    <input type="text" class="form-control" name="account_name" value="${c.account_name || ''}" placeholder="Enter account name">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">SWIFT Code</label>
+                                    <input type="text" class="form-control" name="swift_code" value="${c.swift_code || ''}" placeholder="Enter SWIFT code">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Bank Address</label>
+                                    <input type="text" class="form-control" name="bank_address" value="${c.bank_address || ''}" placeholder="Enter bank address">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" name="is_active" id="isActive"
+                                   ${c.is_active ? 'checked' : ''}>
+                            <label class="form-check-label" for="isActive">
+                                Activate this company (this will deactivate all other companies)
+                            </label>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save Company</button>
+                    </form>
+                `;
+            }
+
+            deleteCompany(companyId) {
+                if (!confirm('Are you sure you want to delete this company?')) return;
+
+                $.ajax({
+                    url: `/api/companies/${companyId}`,
+                    method: 'DELETE',
+                    success: (response) => {
+                        this.showCompanyManagement();
+                        this.showSuccess(response.message);
+                    },
+                    error: (err) => {
+                        const errorMsg = err.responseJSON?.error || 'Failed to delete company';
+                        this.showError(errorMsg);
+                    }
+                });
+            }
+
+            activateCompany(companyId) {
+                if (!confirm('Are you sure you want to activate this company? This will deactivate all other companies.')) return;
+
+                $.ajax({
+                    url: `/api/companies/${companyId}`,
+                    method: 'PUT',
+                    data: JSON.stringify({ is_active: true }),
+                    contentType: 'application/json',
+                    success: () => {
+                        this.showCompanyManagement();
+                        this.loadCompanyInfo();
+                        this.showSuccess('Company activated successfully');
+                    },
+                    error: () => {
+                        this.showError('Failed to activate company');
+                    }
+                });
+            }
+
+            // ============ COMPANY SWITCH METHODS ============
             showCompanySwitch() {
                 const body = document.getElementById('companyModalBody');
                 body.innerHTML = '<div class="text-center"><div class="spinner-border"></div></div>';
@@ -1051,13 +1972,70 @@
                 });
             }
 
+            // ============ IMPORT/EXPORT METHODS ============
+            importData(file) {
+                const formData = new FormData();
+                formData.append('file', file);
+
+                const loading = document.getElementById('loadingOverlay');
+                loading.classList.add('active');
+
+                $.ajax({
+                    url: `/api/import/${this.currentPage}`,
+                    method: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: () => {
+                        loading.classList.remove('active');
+                        this.loadPage(this.currentPage);
+                        this.showSuccess('Data imported successfully');
+                    },
+                    error: (err) => {
+                        loading.classList.remove('active');
+                        this.showError('Failed to import data');
+                        console.error('Error:', err);
+                    }
+                });
+            }
+
+            exportData() {
+                window.location.href = `/api/export/${this.currentPage}`;
+            }
+
+            downloadTemplate() {
+                window.location.href = `/api/download-template/${this.currentPage}`;
+            }
+
+            // ============ UTILITY METHODS ============
             showSuccess(message) {
-                // Simple alert for now - can be enhanced with toast notifications
-                alert('Success: ' + message);
+                const alertDiv = document.createElement('div');
+                alertDiv.className = 'alert alert-success alert-dismissible fade show position-fixed top-0 end-0 m-3';
+                alertDiv.style.zIndex = '9999';
+                alertDiv.style.maxWidth = '400px';
+                alertDiv.innerHTML = `
+                    <strong>✅ Success!</strong> ${message}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                `;
+                document.body.appendChild(alertDiv);
+                setTimeout(() => {
+                    alertDiv.remove();
+                }, 5000);
             }
 
             showError(message) {
-                alert('Error: ' + message);
+                const alertDiv = document.createElement('div');
+                alertDiv.className = 'alert alert-danger alert-dismissible fade show position-fixed top-0 end-0 m-3';
+                alertDiv.style.zIndex = '9999';
+                alertDiv.style.maxWidth = '400px';
+                alertDiv.innerHTML = `
+                    <strong>❌ Error!</strong> ${message}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                `;
+                document.body.appendChild(alertDiv);
+                setTimeout(() => {
+                    alertDiv.remove();
+                }, 5000);
             }
         }
 
@@ -1072,7 +2050,11 @@
                 const formData = new FormData(form);
                 const data = {};
                 formData.forEach((value, key) => {
-                    if (value) data[key] = value;
+                    if (key === 'amount' && value) {
+                        data[key] = parseFloat(value.replace(/,/g, ''));
+                    } else if (value) {
+                        data[key] = value;
+                    }
                 });
 
                 const isUpdate = form.dataset.action === 'update';
@@ -1081,20 +2063,86 @@
                 const url = isUpdate ? `/api/${page}/${id}` : `/api/${page}`;
                 const method = isUpdate ? 'PUT' : 'POST';
 
+                const loading = document.getElementById('loadingOverlay');
+                loading.classList.add('active');
+
                 $.ajax({
                     url: url,
                     method: method,
                     data: JSON.stringify(data),
                     contentType: 'application/json',
                     success: () => {
+                        loading.classList.remove('active');
                         app.modalInstance.hide();
                         app.loadPage(page);
                         app.showSuccess(isUpdate ? 'Updated successfully' : 'Added successfully');
                     },
-                    error: () => {
+                    error: (err) => {
+                        loading.classList.remove('active');
                         app.showError('Failed to save data');
+                        console.error('Error:', err);
                     }
                 });
+            }
+
+            // Handle company form
+            if (e.target.id === 'companyForm') {
+                e.preventDefault();
+                const form = e.target;
+                const formData = new FormData(form);
+                const data = {};
+                formData.forEach((value, key) => {
+                    if (key === 'is_active') {
+                        data[key] = value === 'on';
+                    } else if (value) {
+                        data[key] = value;
+                    }
+                });
+
+                const isUpdate = form.dataset.action === 'update';
+                const id = form.dataset.id || '';
+                const url = isUpdate ? `/api/companies/${id}` : '/api/companies';
+                const method = isUpdate ? 'PUT' : 'POST';
+
+                const loading = document.getElementById('loadingOverlay');
+                loading.classList.add('active');
+
+                $.ajax({
+                    url: url,
+                    method: method,
+                    data: JSON.stringify(data),
+                    contentType: 'application/json',
+                    success: (response) => {
+                        loading.classList.remove('active');
+                        app.modalInstance.hide();
+                        app.showCompanyManagement();
+                        app.loadCompanyInfo();
+                        app.showSuccess(response.message || (isUpdate ? 'Company updated successfully' : 'Company created successfully'));
+                    },
+                    error: (err) => {
+                        loading.classList.remove('active');
+                        const errorMsg = err.responseJSON?.error || 'Failed to save company';
+                        app.showError(errorMsg);
+                        console.error('Error:', err);
+                    }
+                });
+            }
+        });
+
+        // Handle Enter key for report filters
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                if (document.activeElement.id === 'startDate' ||
+                    document.activeElement.id === 'endDate' ||
+                    document.activeElement.id === 'openingBalance') {
+                    app.runCashflowReport();
+                }
+                if (document.activeElement.id === 'reportStartDate' ||
+                    document.activeElement.id === 'reportEndDate' ||
+                    document.activeElement.id === 'reportSupplierFilter' ||
+                    document.activeElement.id === 'reportStatusFilter') {
+                    app.runSupplierPaymentReport();
+                }
             }
         });
     </script>
